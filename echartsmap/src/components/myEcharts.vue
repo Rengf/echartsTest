@@ -58,7 +58,7 @@ export default {
                     show: false,
                     interval: 1,
                     textStyle: {
-                        color: '#fff',
+                        color: '#333',
                         fontSize: 12
                     }
                 },
@@ -79,7 +79,7 @@ export default {
                 data: ['0','1','2','3','4','5','6','7','8','9'],
                 axisLabel: {
                     padding: [3, 4, 5, 6],
-                    color:"rgba(255,255,255,1)",
+                    color:"rgba(0,255,255,1)",
                     formatter: function (value) {
                             return '{' + value + '| }{value|'+grade[value]+'}';
                     },
