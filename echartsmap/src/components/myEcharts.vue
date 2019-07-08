@@ -58,7 +58,7 @@ export default {
                     show: false,
                     interval: 1,
                     textStyle: {
-                        color: '#333',
+                        color: '#13fc3f',
                         fontSize: 12
                     }
                 },
@@ -76,12 +76,12 @@ export default {
         ],
         yAxis:{
                 type: 'category',
-                data: ['0','1','2','3','4','5','6','7','8','9'],
+                data: data.grade,
                 axisLabel: {
                     padding: [3, 4, 5, 6],
-                    color:"rgba(0,255,255,1)",
-                    formatter: function (value) {
-                            return '{' + value + '| }{value|'+grade[value]+'}';
+                    color:"rgba(1,55,255,1)",
+                    formatter: function (value,index) {
+                            return '{' + index + '| }{value|'+grade[index]+'}';
                     },
                     rich: {
                         value: {
