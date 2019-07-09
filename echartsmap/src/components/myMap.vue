@@ -6,6 +6,7 @@
       :zoom="zoom" 
       :scroll-wheel-zoom="true" 
       @click="getClickInfo"
+      @ready="handler"
       @moving="syncCenterAndZoom" 
       @moveend="syncCenterAndZoom" 
       @zoomend="syncCenterAndZoom">
@@ -45,6 +46,17 @@
       }
     },
     methods: {
+      handler ({BMap, map}) {
+				let _this = this;	// 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
+				var geolocation = new BMap.Geolocation();
+				geolocation.getCurrentPosition(function(r){
+					console.log(r);
+					_this.center = {lng: r.longitude, lat: r.latitude};		// 设置center属性值
+					_this.autoLocationPoint = {lng: r.longitude, lat: r.latitude};		// 自定义覆盖物
+					_this.initLocation = true;	
+					console.log('center:', _this.center)	// 如果这里直接使用this是不行的
+				},{enableHighAccuracy: true})
+      },
       /***
        * 地图点击事件。
        */
@@ -70,17 +82,19 @@
       /***
        * 确认
        */
-      confirm: function () {
-        console.log(this.center);
-        console.log(this.keyword)
-        this.$emit('map-confirm', this.center)
+      confirm () {
+        console.log(this.center.lat);
+        var point = new BMap.Point( this.center.lng, this.center.lat);
+        console.log(point);
+         var gc = new BMap.Geocoder();
+        gc.getLocation(point, function(rs){
+          var addComp = rs.addressComponents; console.log(rs.address);//地址信息
+          console.log(rs.address);
+        })
       },
-      /***
-       * 取消
-       */
-      cancel: function () {
+      
+      cancel () {
         this.showMapComponent = false
-        this.$emit('cancel', this.showMapComponent)
       }
     }
   }

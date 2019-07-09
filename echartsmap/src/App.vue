@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <router-link :to="{path:'/map'}">地图</router-link>
+    <router-link :to="{path:'/map'}">百度地图</router-link>
+    <router-link :to="{path:'/amap'}">高德地图</router-link>
     <router-link :to="{path:'/'}">图表</router-link>
     <router-view/>
   </div>

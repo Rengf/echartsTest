@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MyEcharts from '@/components/myEcharts'
 import MyMap from '@/components/myMap'
+import VueAMap from '@/components/amap'
 
 Vue.use(Router)
 
@@ -14,5 +15,9 @@ export default new Router({
         path: '/map',
         name: 'MyMap',
         component: MyMap
+    },{
+        path: '/amap',
+        name: 'VueAMap',
+        component: VueAMap
     }]
 })
