@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <p>{{msg}}</p>
-    <button @click="addRadius">精度++</button>
-    <hr>
+  <div class="mapbox">
     <div class="amap-wrapper">
+      <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
       <el-amap class="amap-box" vid="map" 
         :zoom="zoom"
         :center="center" 
@@ -23,6 +21,7 @@
           fillColor="#38f"
           >
         </el-amap-circle>
+        <el-amap-marker v-for="(marker,index) in markers" :position="marker" :key="index"></el-amap-marker>
       </el-amap>
     </div>
   </div>
@@ -33,15 +32,24 @@ export default {
   data(){
     let vm=this;
     return{
+       markers: [],
+       searchOption: {
+            city: '',
+            citylimit: true
+          },
       msg:'vue-amap demo',
       zoom:16,
       center:[121.406051,31.179695],
       label:{
-        content:'钦汇园',
+        content:'',
         offset:[10,12]
       },
       radius:100,
-      plugin: [
+      plugin: [{
+            pName: 'MapType',
+            defaultType: 0,
+            showRoad: true
+          },
         {
           pName: 'ToolBar',//工具条插件
           position:'LB',
@@ -53,7 +61,7 @@ export default {
         },
         {
           pName:'OverView',
-          //isOpen:true//鹰眼是否打开
+          isOpen:true//鹰眼是否打开
         },
         {
           pName:'Scale'
@@ -75,18 +83,44 @@ export default {
     }
   },
   methods:{
-    addRadius(){
-      this.radius+=10;
-    }
+    addMarker() {
+          let lng = 121.5 + Math.round(Math.random() * 1000) / 10000;
+          let lat = 31.197646 + Math.round(Math.random() * 500) / 10000;
+          this.markers.push([lng, lat]);
+        },
+    onSearchResult(pois) {
+          let latSum = 0;
+          let lngSum = 0;
+          if (pois.length > 0) {
+            pois.forEach(poi => {
+              let {lng, lat} = poi;
+              lngSum += lng;
+              latSum += lat;
+              this.markers.push([poi.lng, poi.lat]);
+            });
+            let searchcenter = {
+              lng: lngSum / pois.length,
+              lat: latSum / pois.length
+            };
+            this.center = [searchcenter.lng, searchcenter.lat];
+            console.log(this.center)
+          }
+        }
   }
 }
 </script>
 <style scoped>
-hr{
-  border-color: red;
-  border-style: dashed;
+.mapbox{
+  width: 80%;
+  margin: auto;
 }
 .amap-wrapper{
-  height: 300px;
+  height: 500px;
 }
+.amap-demo {
+  height: 300px;
+  }
+    .amap-page-container {
+      position: relative;
+    }
 </style>
