@@ -6,7 +6,7 @@ VUE echarts vue-baidu-map vue-amap
 ## 项目运行
 
 ``` bash
-#克隆到本地
+# 克隆到本地
 git clone https://github.com/Rengf/echartsTest.git
 # 安装依赖
 npm install
@@ -18,11 +18,11 @@ npm run dev
 npm run build
 
 
-##echarts
+## echarts
 以后会陆续更新各种图表
 
-##百度地图
+## 百度地图
 百度地图定位精确度太低，其它还好。
 
-##高德地图
+## 高德地图
 高德地图定位比较精确。不断完善中。
