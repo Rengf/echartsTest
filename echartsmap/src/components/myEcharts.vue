@@ -5,27 +5,28 @@
 </template>
 
 <script>
+import axios from "axios"
 import echarts from 'echarts'
 export default {
   name: 'MyEcharts',
   data () {
     return {
-      charts:''
+      charts:'',
+      data:{}
     }
   },
+  
   mounted() {
-    this.$nextTick(()=>{this.drawLine()})
+        axios.get('static/echartsdata.json')
+        .then(res=>{
+            this.echartsdata1=res.data.testdata1;
+           this.drawLine()
+        })
+        .catch(err=>{console.log(err)})
   },
   methods:{
     drawLine(){
-          var totalCost = [200000000, 200000000, 200000000,200000000,200000000,200000000, 200000000, 200000000,200000000,200000000]; //背景色比例
-          var visits = [9336765, 10336765, 12336765,15944411,16336765,17336765,32336765,47336765,153367656,172336765]; //数值
-          var grade = ['缪    超', '薛嘉运', '刘庆智','董    洋','孔德娜','刘    敏','梦    蕾','猪刚鬣','孙悟空','唐三藏'];
-          var data = {
-              grade: grade,
-              totalCost: totalCost,
-              visits: visits,
-          };
+          var data = this.echartsdata1;
           this.charts = echarts.init(document.getElementById('chart'));
           this.charts.setOption({
         backgroundColor:"rgba(255,255,255,255)",
@@ -81,7 +82,7 @@ export default {
                     padding: [3, 4, 5, 6],
                     color:"rgba(1,55,255,1)",
                     formatter: function (value,index) {
-                            return '{' + index + '| }{value|'+grade[index]+'}';
+                            return '{' + index + '| }{value|'+data.grade[index]+'}';
                     },
                     rich: {
                         value: {
