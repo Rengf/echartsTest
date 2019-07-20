@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MyEcharts from '@/components/myEcharts'
 import Echarts1 from '@/components/echarts1'
+import Echarts2 from '@/components/echarts2'
 import MyMap from '@/components/myMap'
 import VueAMap from '@/components/amap'
 
@@ -21,6 +22,13 @@ export default new Router({
         component: Echarts1,
         meta: {
             title: "柱状图1"
+        }
+    },{
+        path: '/echarts2',
+        name: 'Echarts2',
+        component: Echarts2,
+        meta: {
+            title: "折线图1"
         }
     }, {
         path: '/map',
